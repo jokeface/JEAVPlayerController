@@ -101,8 +101,8 @@
             case AVPlayerItemStatusReadyToPlay:
                 NSLog(@"准备播放");
                 [self monitoringPlayback:_playerItem];
-//                [self.delegate JEAVPlayerRun];
-                [self.delegate JEAVPlayerLoading];
+                [self.delegate JEAVPlayerRun];
+                [_player play];
                 
                 break;
             case AVPlayerItemStatusFailed:
@@ -120,8 +120,9 @@
     {
         NSLog(@"加载好了");
         if (_StatusType != JEPlayerStatusTypePlause) {
-            [_player play];
             [self.delegate JEAVPlayerRun];
+            [_player play];
+            
         }
         
     }else if ([keyPath isEqualToString:@"playbackBufferFull"])
@@ -188,8 +189,6 @@
     [_playerItem removeObserver:self forKeyPath:@"playbackBufferFull"];
     [_playerItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
     [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
-    
-    [_player removeTimeObserver:self];
 }
 -(void)StartJEAVPlayer
 {

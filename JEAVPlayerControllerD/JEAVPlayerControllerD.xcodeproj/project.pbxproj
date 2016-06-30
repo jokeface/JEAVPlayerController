@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3ABDBBAC1D25586F00CDE9B7 /* JEAVPlayerOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */; };
+		3ABDBBB21D25806000CDE9B7 /* AVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDBBB11D25806000CDE9B7 /* AVViewController.m */; };
 		3ABFD3191D250AF3004288DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD3181D250AF3004288DD /* main.m */; };
 		3ABFD31C1D250AF3004288DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD31B1D250AF3004288DD /* AppDelegate.m */; };
 		3ABFD31F1D250AF3004288DD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD31E1D250AF3004288DD /* ViewController.m */; };
@@ -22,6 +23,8 @@
 /* Begin PBXFileReference section */
 		3ABDBBAA1D25586F00CDE9B7 /* JEAVPlayerOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerOverView.h; sourceTree = "<group>"; };
 		3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JEAVPlayerOverView.m; sourceTree = "<group>"; };
+		3ABDBBB01D25806000CDE9B7 /* AVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVViewController.h; sourceTree = "<group>"; };
+		3ABDBBB11D25806000CDE9B7 /* AVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVViewController.m; sourceTree = "<group>"; };
 		3ABFD3141D250AF3004288DD /* JEAVPlayerControllerD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JEAVPlayerControllerD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ABFD3181D250AF3004288DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3ABFD31A1D250AF3004288DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -76,6 +79,8 @@
 				3ABFD31B1D250AF3004288DD /* AppDelegate.m */,
 				3ABFD31D1D250AF3004288DD /* ViewController.h */,
 				3ABFD31E1D250AF3004288DD /* ViewController.m */,
+				3ABDBBB01D25806000CDE9B7 /* AVViewController.h */,
+				3ABDBBB11D25806000CDE9B7 /* AVViewController.m */,
 				3ABFD3201D250AF3004288DD /* Main.storyboard */,
 				3ABFD3231D250AF3004288DD /* Assets.xcassets */,
 				3ABFD3251D250AF3004288DD /* LaunchScreen.storyboard */,
@@ -182,6 +187,7 @@
 				3ABFD33A1D25138B004288DD /* JEAVPlayerLoadingView.m in Sources */,
 				3ABFD3311D250B8A004288DD /* JEAVPlayerController.m in Sources */,
 				3ABFD31F1D250AF3004288DD /* ViewController.m in Sources */,
+				3ABDBBB21D25806000CDE9B7 /* AVViewController.m in Sources */,
 				3ABFD31C1D250AF3004288DD /* AppDelegate.m in Sources */,
 				3ABDBBAC1D25586F00CDE9B7 /* JEAVPlayerOverView.m in Sources */,
 				3ABFD3191D250AF3004288DD /* main.m in Sources */,
