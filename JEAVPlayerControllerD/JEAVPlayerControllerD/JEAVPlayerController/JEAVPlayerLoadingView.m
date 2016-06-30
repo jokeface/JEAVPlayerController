@@ -57,7 +57,24 @@
     }
     return _imageView;
 }
-
+-(instancetype)init
+{
+    if (self = [super init]) {
+        
+        
+        //        [self setBackgroundColor:[UIColor redColor]];
+        
+        
+        
+        self.autoresizingMask=UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        
+        [self imageView];
+        [self backImageView];
+        
+        
+    }
+    return self;
+}
 //旋转动画的执行
 -(void)StartAnimation
 {

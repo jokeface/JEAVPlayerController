@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JEAVPlayerProtocol.h"
 
-@interface JEAVPlayerOverView : UIView
 
+@interface JEAVPlayerOverView : UIView <JEAVPlayerProtocol>
+@property(nonatomic,weak)id<JEAVPlayerControllerDelegate>delegate;
 @end

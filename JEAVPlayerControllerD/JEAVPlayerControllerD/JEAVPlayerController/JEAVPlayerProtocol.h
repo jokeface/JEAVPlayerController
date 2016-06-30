@@ -9,6 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 
+typedef enum {
+    JEPlayerStatusTypeBeforeBegin,//开始
+    JEPlayerStatusTypeStop,//停止
+    JEPlayerStatusTypePlause,//暂停
+    JEPlayerStatusTypeLoading, //加载中
+    JEPlayerStatusTypeRun //播放中
+} JEPlayerStatusType;//枚举，用于记录播放器目前的状态，从而更新UI
+
 @protocol JEAVPlayerProtocol <NSObject> //代理设置为OverView,用来传递AVPlayerController的播放状态
 -(void)JEAVPlayerStop;  //视频播放器已经停止
 -(void)JEAVPlayerRun; //视频播放器正在播放
@@ -25,3 +33,6 @@
 -(void)PauseJEAVPlayer;//暂停播放器
 -(void)StartJEAVPlayer;//开始播放器
 -(void)SeekTime:(CMTime)time;//设置播放的时间
+
+
+@end

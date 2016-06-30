@@ -9,13 +9,7 @@
 #import "JEAVPlayerOverView.h"
 #import "JEAVPlayerLoadingView.h"
 
-typedef enum {
-    JEPlayerStatusTypeBeforeBegin,//开始
-    JEPlayerStatusTypeStop,//停止
-    JEPlayerStatusTypePlause,//暂停
-    JEPlayerStatusTypeLoading, //加载中
-    JEPlayerStatusTypeRun //播放中
-} JEPlayerStatusType;//枚举，用于记录播放器目前的状态，从而更新UI
+
 
 @interface JEAVPlayerOverView ()
 @property(nonatomic,weak)UIButton* PlayButton; //播放暂停按钮(大)
@@ -60,7 +54,7 @@ typedef enum {
 {
     if (!_LoadingView) {
         JEAVPlayerLoadingView* LoadingView=[[JEAVPlayerLoadingView alloc]init];
-        
+        [LoadingView setHidden:YES];
         LoadingView.contentMode = UIViewContentModeScaleAspectFit;
         LoadingView.translatesAutoresizingMaskIntoConstraints = NO;
         
@@ -206,6 +200,173 @@ typedef enum {
         [NSLayoutConstraint activateConstraints:@[CenterXConstraint,CenterYConstraint,heightConstraint,weightConstraint]];
     }
     return _PlayButton;
+}
+
+
+-(void)JEAVPlayerWithCurrentTime:(CMTime)currentTime TotalTime:(CMTime)totalTime
+{
+    CGFloat current=(CGFloat)currentTime.value/currentTime.timescale;
+    CGFloat total=(CGFloat)totalTime.value/totalTime.timescale;
+    
+    [_Slider setMinimumValue:0.0f];
+    [_Slider setMaximumValue:total];
+    [_Slider setValue:current animated:YES];
+    
+    [_CurrentTimeLable setText:[self convertTime:current]];
+    [_TotalTimeLable setText:[NSString stringWithFormat:@"-%@",[self convertTime:(total-current)]]];
+}
+// 计算视频长度
+- (NSString *)convertTime:(CGFloat)second{
+    NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    if (second/3600 >= 1) {
+        [formatter setDateFormat:@"HH:mm:ss"];
+    } else {
+        [formatter setDateFormat:@"mm:ss"];
+    }
+    NSString *showtimeNew = [formatter stringFromDate:d];
+    return showtimeNew;
+}
+
+
+-(void)JEAVPlayerPause
+{
+    [self StatusTypePlause];
+}
+-(void)JEAVPlayerLoading
+{
+    //    [_PlayButton setHidden:NO];
+    //    [_PlayButton setBackgroundImage:[UIImage imageNamed:@"videoplayer_loadingbar"] forState:UIControlStateNormal];
+    //    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_loading"] forState:UIControlStateNormal];
+    [self StatusTypeLoading];
+}
+-(void)JEAVPlayerRun
+{
+    
+    
+    [self StatusTypeRun];
+    
+    
+}
+-(void)JEAVPlayerStop
+{
+    NSLog(@"结束");
+}
+
+-(void)PlayButtonClick
+{
+    
+    if (_StatusType == JEPlayerStatusTypePlause) {
+        _StatusType =  JEPlayerStatusTypeRun;
+        [self StatusTypeRun];
+        [self.delegate StartJEAVPlayer];
+    }else
+    {
+        _StatusType =  JEPlayerStatusTypePlause;
+        [self StatusTypePlause];
+        [self.delegate PauseJEAVPlayer];
+    }
+}
+
+-(void)LittlePlayButtonClick:(UIButton*)littleButton
+{
+    
+    if (_StatusType == JEPlayerStatusTypePlause) {
+        _StatusType =  JEPlayerStatusTypeRun;
+        [self StatusTypeRun];
+        [self.delegate StartJEAVPlayer];
+    }else
+    {
+        _StatusType =  JEPlayerStatusTypePlause;
+        [self StatusTypePlause];
+        [self.delegate PauseJEAVPlayer];
+    }
+}
+-(void)sliderDragUp:(UISlider*)slider
+{
+    [self.delegate SeekTime:CMTimeMake(slider.value, 1.0f)];
+}
+-(void)sliderTouchDown:(UISlider*)slider
+{
+    
+    [self StatusTypePlause];
+    
+    [self.delegate PauseJEAVPlayer];
+}
+-(void)sliderTouchUp:(UISlider*)slider
+{
+    [self StatusTypeRun];
+    
+    [self.delegate StartJEAVPlayer];
+}
+
+//JEPlayerStatusTypeBeforeBegin,//开始
+//JEPlayerStatusTypeStop,//停止
+//JEPlayerStatusTypePlause,//暂停
+//JEPlayerStatusTypeLoading, //加载中
+//JEPlayerStatusTypeRun //播放中
+
+-(void)StatusBeforeBegin
+{
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    
+    
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    [_LoadingView Hide];
+    
+    _StatusType = JEPlayerStatusTypeBeforeBegin;
+}
+
+-(void)StatusTypeStop
+{
+    NSLog(@"停止");
+    [_PlayButton setHidden:NO];
+    [_LoadingView Hide];
+    _StatusType = JEPlayerStatusTypeStop;
+}
+//暂停
+-(void)StatusTypePlause
+{
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_play"] forState:UIControlStateNormal];
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_play_highlighted"] forState:UIControlStateHighlighted];
+    
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_play"] forState:UIControlStateNormal];
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_play_highlighted"] forState:UIControlStateHighlighted];
+    [_PlayButton setHidden:NO];
+    [_LoadingView Hide];
+    
+    _StatusType = JEPlayerStatusTypePlause;
+}
+//加载中
+-(void)StatusTypeLoading
+{
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    [_PlayButton setHidden:YES];
+    
+    [_LoadingView Show];
+    
+    
+    _StatusType = JEPlayerStatusTypeLoading;
+}
+
+//播放中
+-(void)StatusTypeRun
+{
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_LittlePlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop"] forState:UIControlStateNormal];
+    [_PlayButton setImage:[UIImage imageNamed:@"videoplayer_icon_stop_highlighted"] forState:UIControlStateHighlighted];
+    
+    [_PlayButton setHidden:YES];
+    [_LoadingView Hide];
+    _StatusType = JEPlayerStatusTypeRun;
 }
 
 @end

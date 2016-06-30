@@ -100,11 +100,11 @@
 				3ABFD3301D250B8A004288DD /* JEAVPlayerController.m */,
 				3ABFD3321D250FE1004288DD /* JEAVPlayerView.h */,
 				3ABFD3331D250FE1004288DD /* JEAVPlayerView.m */,
+				3ABDBBAA1D25586F00CDE9B7 /* JEAVPlayerOverView.h */,
+				3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */,
 				3ABFD3381D25138B004288DD /* JEAVPlayerLoadingView.h */,
 				3ABFD3391D25138B004288DD /* JEAVPlayerLoadingView.m */,
 				3ABFD33B1D251685004288DD /* JEAVPlayerProtocol.h */,
-				3ABDBBAA1D25586F00CDE9B7 /* JEAVPlayerOverView.h */,
-				3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */,
 			);
 			path = JEAVPlayerController;
 			sourceTree = "<group>";

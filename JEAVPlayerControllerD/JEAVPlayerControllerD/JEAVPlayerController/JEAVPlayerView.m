@@ -39,5 +39,10 @@
     }
     return self;
 }
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    [_OverView setFrame:self.bounds];
+}
 
 @end

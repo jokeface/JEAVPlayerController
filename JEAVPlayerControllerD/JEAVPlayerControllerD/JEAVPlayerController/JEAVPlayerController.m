@@ -9,11 +9,11 @@
 #import "JEAVPlayerController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "JEAVPlayerView.h"
-//#import "JEAVPlayerProtocol.h"
-//#import "JEAVPlayerOverView.h"
+#import "JEAVPlayerProtocol.h"
+#import "JEAVPlayerOverView.h"
 
 
-@interface JEAVPlayerController()
+@interface JEAVPlayerController()<JEAVPlayerControllerDelegate>
 /*
  * AVAsset 基本属性：描述多媒体基本信息
  */
@@ -32,7 +32,9 @@
 
 @property(strong,nonatomic)JEAVPlayerView* playerView; //视频播放图层，用于渲染图层
 
-//@property(nonatomic,weak)id<JEAVPlayerProtocol> delegate;
+@property(nonatomic,weak)id<JEAVPlayerProtocol> delegate;
+
+@property(assign,nonatomic)JEPlayerStatusType StatusType;// 当前播放的状态
 @end
 
 @implementation JEAVPlayerController
@@ -83,8 +85,8 @@
     
     
     
-//    [self setDelegate:_playerView.OverView];
-//    _playerView.OverView.delegate=self;
+    [self setDelegate:_playerView.OverView];
+    _playerView.OverView.delegate = self;
 }
 -(UIView *)view
 {
@@ -94,10 +96,89 @@
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     if ([keyPath isEqualToString:@"status"]) {
-        [NSThread currentThread];
+        NSLog(@"%@",[NSThread currentThread]);
+        switch (_playerItem.status) {
+            case AVPlayerItemStatusReadyToPlay:
+                NSLog(@"准备播放");
+                [self monitoringPlayback:_playerItem];
+//                [self.delegate JEAVPlayerRun];
+                [self.delegate JEAVPlayerLoading];
+                
+                break;
+            case AVPlayerItemStatusFailed:
+                NSLog(@"播放失败");
+                break;
+            default:
+                NSLog(@"未知错误");
+                break;
+        }
+        
+    } else if ([keyPath isEqualToString:@"playbackBufferEmpty"]){
+        NSLog(@"加载中");
+        [self.delegate JEAVPlayerLoading];
+    }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"])
+    {
+        NSLog(@"加载好了");
+        if (_StatusType != JEPlayerStatusTypePlause) {
+            [_player play];
+            [self.delegate JEAVPlayerRun];
+        }
+        
+    }else if ([keyPath isEqualToString:@"playbackBufferFull"])
+    {
+        NSLog(@"我特么加载满了");
+    }else if ([keyPath isEqualToString:@"loadedTimeRanges"])
+    {
+        NSTimeInterval timeInterval = [self availableDuration];// 计算缓冲进度
+        CMTime duration = self.playerItem.duration;
+        CGFloat totalDuration = CMTimeGetSeconds(duration);
+//        NSLog(@"Time Interval:%f",timeInterval/totalDuration);
     }
 }
 
+
+//// 计算视频长度
+//- (NSString *)convertTime:(CGFloat)second{
+//    NSDate *d = [NSDate dateWithTimeIntervalSince1970:second];
+//    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+//    if (second/3600 >= 1) {
+//        [formatter setDateFormat:@"HH:mm:ss"];
+//    } else {
+//        [formatter setDateFormat:@"mm:ss"];
+//    }
+//    NSString *showtimeNew = [formatter stringFromDate:d];
+//    return showtimeNew;
+//}
+
+//计算缓冲进度
+- (NSTimeInterval)availableDuration {
+    NSArray *loadedTimeRanges = [[self.player currentItem] loadedTimeRanges];
+    CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域
+    float startSeconds = CMTimeGetSeconds(timeRange.start);
+    float durationSeconds = CMTimeGetSeconds(timeRange.duration);
+    NSTimeInterval result = startSeconds + durationSeconds;// 计算缓冲总进度
+    return result;
+}
+- (void)monitoringPlayback:(AVPlayerItem *)playerItem {
+    
+    __weak JEAVPlayerController* weakself = self;
+    
+    [self.player addPeriodicTimeObserverForInterval:CMTimeMake(1, 1) queue:NULL usingBlock:^(CMTime time) {
+        
+        [weakself.delegate JEAVPlayerWithCurrentTime:time TotalTime:playerItem.duration];
+        
+    }];
+    
+    
+    
+    [self.player addBoundaryTimeObserverForTimes:@[[NSValue valueWithCMTime:self.playerItem.duration]] queue:NULL usingBlock:^{
+        NSLog(@"我已经播完了");
+        NSURL* assetURL= [NSURL URLWithString:@"http://mvvideo1.meitudata.com/56e93404432e71916.mp4"];
+        AVPlayerItem * item = [AVPlayerItem playerItemWithURL:assetURL];
+        [weakself.player replaceCurrentItemWithPlayerItem:item];
+    }];
+    
+}
 
 
 -(void)dealloc
@@ -107,7 +188,23 @@
     [_playerItem removeObserver:self forKeyPath:@"playbackBufferFull"];
     [_playerItem removeObserver:self forKeyPath:@"playbackLikelyToKeepUp"];
     [_playerItem removeObserver:self forKeyPath:@"loadedTimeRanges"];
+    
+    [_player removeTimeObserver:self];
 }
-
+-(void)StartJEAVPlayer
+{
+    _StatusType = JEPlayerStatusTypeRun;
+    [_player play];
+}
+-(void)PauseJEAVPlayer
+{
+    _StatusType = JEPlayerStatusTypePlause;
+    [_player pause];
+    
+}
+-(void)SeekTime:(CMTime)time
+{
+    [_player seekToTime:time];
+}
 
 @end
