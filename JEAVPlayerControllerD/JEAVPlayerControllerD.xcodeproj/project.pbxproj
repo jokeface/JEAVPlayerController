@@ -7,15 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3ABDBBAC1D25586F00CDE9B7 /* JEAVPlayerOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */; };
 		3ABFD3191D250AF3004288DD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD3181D250AF3004288DD /* main.m */; };
 		3ABFD31C1D250AF3004288DD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD31B1D250AF3004288DD /* AppDelegate.m */; };
 		3ABFD31F1D250AF3004288DD /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD31E1D250AF3004288DD /* ViewController.m */; };
 		3ABFD3221D250AF3004288DD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3ABFD3201D250AF3004288DD /* Main.storyboard */; };
 		3ABFD3241D250AF3004288DD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3ABFD3231D250AF3004288DD /* Assets.xcassets */; };
 		3ABFD3271D250AF3004288DD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3ABFD3251D250AF3004288DD /* LaunchScreen.storyboard */; };
+		3ABFD3311D250B8A004288DD /* JEAVPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD3301D250B8A004288DD /* JEAVPlayerController.m */; };
+		3ABFD3341D250FE1004288DD /* JEAVPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD3331D250FE1004288DD /* JEAVPlayerView.m */; };
+		3ABFD33A1D25138B004288DD /* JEAVPlayerLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3ABFD3391D25138B004288DD /* JEAVPlayerLoadingView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3ABDBBAA1D25586F00CDE9B7 /* JEAVPlayerOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerOverView.h; sourceTree = "<group>"; };
+		3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JEAVPlayerOverView.m; sourceTree = "<group>"; };
 		3ABFD3141D250AF3004288DD /* JEAVPlayerControllerD.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JEAVPlayerControllerD.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3ABFD3181D250AF3004288DD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		3ABFD31A1D250AF3004288DD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -26,6 +32,13 @@
 		3ABFD3231D250AF3004288DD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3ABFD3261D250AF3004288DD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3ABFD3281D250AF3004288DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3ABFD32F1D250B8A004288DD /* JEAVPlayerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerController.h; sourceTree = "<group>"; };
+		3ABFD3301D250B8A004288DD /* JEAVPlayerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JEAVPlayerController.m; sourceTree = "<group>"; };
+		3ABFD3321D250FE1004288DD /* JEAVPlayerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerView.h; sourceTree = "<group>"; };
+		3ABFD3331D250FE1004288DD /* JEAVPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JEAVPlayerView.m; sourceTree = "<group>"; };
+		3ABFD3381D25138B004288DD /* JEAVPlayerLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerLoadingView.h; sourceTree = "<group>"; };
+		3ABFD3391D25138B004288DD /* JEAVPlayerLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JEAVPlayerLoadingView.m; sourceTree = "<group>"; };
+		3ABFD33B1D251685004288DD /* JEAVPlayerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JEAVPlayerProtocol.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +71,7 @@
 		3ABFD3161D250AF3004288DD /* JEAVPlayerControllerD */ = {
 			isa = PBXGroup;
 			children = (
+				3ABFD32E1D250B5C004288DD /* JEAVPlayerController */,
 				3ABFD31A1D250AF3004288DD /* AppDelegate.h */,
 				3ABFD31B1D250AF3004288DD /* AppDelegate.m */,
 				3ABFD31D1D250AF3004288DD /* ViewController.h */,
@@ -77,6 +91,22 @@
 				3ABFD3181D250AF3004288DD /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3ABFD32E1D250B5C004288DD /* JEAVPlayerController */ = {
+			isa = PBXGroup;
+			children = (
+				3ABFD32F1D250B8A004288DD /* JEAVPlayerController.h */,
+				3ABFD3301D250B8A004288DD /* JEAVPlayerController.m */,
+				3ABFD3321D250FE1004288DD /* JEAVPlayerView.h */,
+				3ABFD3331D250FE1004288DD /* JEAVPlayerView.m */,
+				3ABFD3381D25138B004288DD /* JEAVPlayerLoadingView.h */,
+				3ABFD3391D25138B004288DD /* JEAVPlayerLoadingView.m */,
+				3ABFD33B1D251685004288DD /* JEAVPlayerProtocol.h */,
+				3ABDBBAA1D25586F00CDE9B7 /* JEAVPlayerOverView.h */,
+				3ABDBBAB1D25586F00CDE9B7 /* JEAVPlayerOverView.m */,
+			);
+			path = JEAVPlayerController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -149,9 +179,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ABFD33A1D25138B004288DD /* JEAVPlayerLoadingView.m in Sources */,
+				3ABFD3311D250B8A004288DD /* JEAVPlayerController.m in Sources */,
 				3ABFD31F1D250AF3004288DD /* ViewController.m in Sources */,
 				3ABFD31C1D250AF3004288DD /* AppDelegate.m in Sources */,
+				3ABDBBAC1D25586F00CDE9B7 /* JEAVPlayerOverView.m in Sources */,
 				3ABFD3191D250AF3004288DD /* main.m in Sources */,
+				3ABFD3341D250FE1004288DD /* JEAVPlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,6 +334,7 @@
 				3ABFD32D1D250AF3004288DD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

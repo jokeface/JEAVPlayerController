@@ -7,16 +7,21 @@
 //
 
 #import "ViewController.h"
+//#import "JEAVPlayerController.h"
 
 @interface ViewController ()
-
+//@property(nonatomic,strong)JEAVPlayerController* playerController;
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+//    NSURL* assetURL= [NSURL URLWithString:@"http://mvvideo1.meitudata.com/5742706be0bac7948.mp4"];
+//    _playerController =[[JEAVPlayerController alloc]initWithURL:assetURL];
+//    [_playerController.view setFrame:self.view.bounds];
+//    
+//    [self.view addSubview:_playerController.view];
 }
 
 - (void)didReceiveMemoryWarning {
