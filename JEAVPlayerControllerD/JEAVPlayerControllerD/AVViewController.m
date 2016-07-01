@@ -22,8 +22,5 @@
     
     [self.view addSubview:_playerController.view];
 }
--(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
+
 @end

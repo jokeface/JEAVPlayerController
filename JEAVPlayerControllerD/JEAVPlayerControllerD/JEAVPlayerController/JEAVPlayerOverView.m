@@ -16,6 +16,8 @@
 @property(nonatomic,weak)UIButton* LittlePlayButton; //播放暂停按钮(小)
 @property(nonatomic,weak)UISlider* Slider; // 播放进度条
 
+@property(nonatomic,weak)UIProgressView* Progress; // 缓存条
+
 @property(nonatomic,weak)JEAVPlayerLoadingView* LoadingView;//加载圆圈控件
 
 @property(nonatomic,weak)UILabel* CurrentTimeLable;//显示当前播放时间的控件
@@ -23,6 +25,8 @@
 @property(nonatomic,weak)UILabel* TotalTimeLable;//显示剩余播放时间的控件
 
 @property(assign,nonatomic)JEPlayerStatusType StatusType;// 当前播放的状态
+
+
 @end
 
 @implementation JEAVPlayerOverView
@@ -47,9 +51,36 @@
     [self TotalTimeLable];
     [self LittlePlayButton];
     [self LoadingView];
+    [self Progress];
 }
 
 #pragma mark 懒加载
+
+-(UIProgressView *)Progress
+{
+    if (!_Progress) {
+        UIProgressView* Progress = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleDefault];
+        [Progress setProgressTintColor:[UIColor grayColor]];
+        Progress.trackTintColor = [UIColor darkGrayColor];
+        [Progress setProgress:0.0 animated:YES];
+        Progress.translatesAutoresizingMaskIntoConstraints = NO;
+        _Progress=Progress;
+        [self insertSubview:Progress belowSubview:[self Slider]];
+        
+        NSLayoutConstraint* ToCenterX = [NSLayoutConstraint constraintWithItem:Progress attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:[self Slider] attribute:NSLayoutAttributeCenterX multiplier:1.0f constant:0.0];
+        
+        NSLayoutConstraint* ToCenterY = [NSLayoutConstraint constraintWithItem:Progress attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:[self Slider] attribute:NSLayoutAttributeCenterY multiplier:1.0f constant:0.5f];
+        
+        NSLayoutConstraint* ToWidth = [NSLayoutConstraint constraintWithItem:Progress attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:[self Slider] attribute:NSLayoutAttributeWidth multiplier:1.0f constant:0.0f];
+//
+//        
+//        NSLayoutConstraint* ToBottomConstraint = [NSLayoutConstraint constraintWithItem:Progress attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-20.0];
+//        
+        [NSLayoutConstraint activateConstraints:@[ToCenterY,ToCenterX,ToWidth]];
+    }
+    return _Progress;
+}
+
 -(JEAVPlayerLoadingView *)LoadingView
 {
     if (!_LoadingView) {
@@ -151,7 +182,7 @@
         
         
         [Slider setMinimumTrackTintColor:[UIColor whiteColor]];
-        [Slider setMaximumTrackTintColor:[UIColor grayColor]];
+        [Slider setMaximumTrackTintColor:[UIColor clearColor]];
         [Slider  setThumbImage:[UIImage imageNamed:@"videoplayer_erect_icon_round"] forState:UIControlStateNormal];
         Slider.translatesAutoresizingMaskIntoConstraints = NO;
         _Slider=Slider;
@@ -161,9 +192,9 @@
         NSLayoutConstraint* ToLeftConstraint = [NSLayoutConstraint constraintWithItem:Slider attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:[self CurrentTimeLable] attribute:NSLayoutAttributeRight multiplier:1.0f constant:10.0f];
         
         
-        NSLayoutConstraint* ToButtonConstraint = [NSLayoutConstraint constraintWithItem:Slider attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-20.0];
+        NSLayoutConstraint* ToBottomConstraint = [NSLayoutConstraint constraintWithItem:Slider attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeBottom multiplier:1.0f constant:-20.0];
         
-        [NSLayoutConstraint activateConstraints:@[ToLeftConstraint,ToButtonConstraint]];
+        [NSLayoutConstraint activateConstraints:@[ToLeftConstraint,ToBottomConstraint]];
         
         //        NSLayoutConstraint* weightConstraint = [NSLayoutConstraint constraintWithItem:Slider attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0f constant:80.0];
         
@@ -214,6 +245,11 @@
     
     [_CurrentTimeLable setText:[self convertTime:current]];
     [_TotalTimeLable setText:[NSString stringWithFormat:@"-%@",[self convertTime:(total-current)]]];
+}
+
+-(void)JEAVPlayerCMTimeRange:(CGFloat)Progressing
+{
+    [[self Progress] setProgress:Progressing animated:YES];
 }
 // 计算视频长度
 - (NSString *)convertTime:(CGFloat)second{
@@ -367,6 +403,17 @@
     [_PlayButton setHidden:YES];
     [_LoadingView Hide];
     _StatusType = JEPlayerStatusTypeRun;
+}
+-(UIImage*)createImageWithColor:(UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
 }
 
 @end

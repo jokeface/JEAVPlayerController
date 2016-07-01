@@ -26,6 +26,11 @@ typedef enum {
 
 //当前播放时间和总共播放时间
 -(void)JEAVPlayerWithCurrentTime:(CMTime)currentTime TotalTime:(CMTime)totalTime;
+
+//缓存的进度
+-(void)JEAVPlayerCMTimeRange:(CGFloat)Progressing;
+
+
 @end
 
 

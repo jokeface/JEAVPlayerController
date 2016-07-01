@@ -133,7 +133,8 @@
         NSTimeInterval timeInterval = [self availableDuration];// 计算缓冲进度
         CMTime duration = self.playerItem.duration;
         CGFloat totalDuration = CMTimeGetSeconds(duration);
-//        NSLog(@"Time Interval:%f",timeInterval/totalDuration);
+        [self.delegate JEAVPlayerCMTimeRange:timeInterval/totalDuration];
+        NSLog(@"Time Interval:%f",timeInterval/totalDuration);
     }
 }
 
@@ -154,6 +155,7 @@
 //计算缓冲进度
 - (NSTimeInterval)availableDuration {
     NSArray *loadedTimeRanges = [[self.player currentItem] loadedTimeRanges];
+    NSLog(@"%lu",(unsigned long)loadedTimeRanges.count);
     CMTimeRange timeRange = [loadedTimeRanges.firstObject CMTimeRangeValue];// 获取缓冲区域
     float startSeconds = CMTimeGetSeconds(timeRange.start);
     float durationSeconds = CMTimeGetSeconds(timeRange.duration);

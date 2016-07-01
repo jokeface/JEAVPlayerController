@@ -27,7 +27,8 @@
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
     AVViewController* viewController =[[AVViewController alloc]init];
-    [self presentViewController:viewController animated:YES completion:nil];
+//    [self presentViewController:viewController animated:YES completion:nil];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {
